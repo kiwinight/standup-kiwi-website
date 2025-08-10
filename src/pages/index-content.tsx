@@ -133,12 +133,10 @@ function Hero({
                       sm: "center",
                     }}
                   >
-                    The standup tool that
-                    <br className="hidden sm:block" />
-                    <Text className="italic" weight="bold">
-                      {" "}
-                      actually works
-                    </Text>
+                    Finish your standup
+                    <br className="" /> in{" "}
+                    <span className="italic">3 minutes</span> —{" "}
+                    <span className="italic">not 30</span>.
                   </Heading>
 
                   <Flex gap="2" wrap="wrap" justify="center">
@@ -165,11 +163,10 @@ function Hero({
                       sm: "center",
                     }}
                   >
-                    Skip the endless meetings and scattered chat threads.
-                    <br className="hidden sm:block" /> Standup Kiwi gives you a
-                    simple, organized board to share and record daily updates
-                    <br className="hidden sm:block" />— whether you work solo or
-                    with a team.
+                    Standup Kiwi is a shared board where teams post daily
+                    updates —
+                    <br className="hidden sm:block" /> keep meetings short by
+                    staying on topic, or skip them entirely.
                   </Text>
 
                   <Button
@@ -224,7 +221,7 @@ function Problem() {
         "Scattered updates buried in threads that you can never find later when you need them.",
     },
     {
-      title: "Tool overload...",
+      title: "Overkill tools...",
       description:
         "Over-engineered tools like Jira, Notion templates, or Linear that feel like overkill for simple daily check-ins.",
     },
@@ -337,7 +334,7 @@ function MeetStandupKiwi({
       title: (
         <>
           Turn 30-minute meetings
-          <br className="hidden sm:block" /> into focused 5-minute standups
+          <br className="hidden sm:block" /> into focused 3-minute standups
         </>
       ),
       description:
@@ -1573,10 +1570,12 @@ function FinalCTA({
                     }}
                     align="center"
                   >
-                    Ready to transform your standups?
+                    Keep standups short. Stay aligned.
                   </Heading>
                   <Text align="center" as="div">
-                    Set up your standup board in seconds
+                    With updates captured in one place, standups stay brief and
+                    on‑topic — <br className="hidden sm:block" /> or skip the
+                    meeting entirely.
                   </Text>
                 </Flex>
 
