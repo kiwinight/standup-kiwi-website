@@ -40,8 +40,10 @@ function Content({ post, children }: Props) {
             sm: "4",
           }}
           pb={{
-            initial: "48px",
-            sm: "56px",
+            // initial: "48px",
+            // sm: "56px",
+            initial: "24px",
+            sm: "24px",
           }}
           className="relative"
         >
@@ -133,20 +135,26 @@ function Content({ post, children }: Props) {
                 sm: "6",
               }}
             >
-              <Card
-                size={{
-                  initial: "2",
-                  sm: "4",
-                }}
-              >
-                <Inset clip="padding-box" side="all">
-                  <img
-                    src={post.data.heroImage}
-                    className="object-cover w-full aspect-2/1"
-                    alt={post.data.title}
-                  />
-                </Inset>
-              </Card>
+              {post.data.heroImage && (
+                <Card
+                  size={{
+                    initial: "2",
+                    sm: "4",
+                  }}
+                  mt={{
+                    initial: '24px',
+                    sm: '32px',
+                  }}
+                >
+                  <Inset clip="padding-box" side="all">
+                    <img
+                      src={post.data.heroImage}
+                      className="object-cover w-full aspect-2/1"
+                      alt={post.data.title}
+                    />
+                  </Inset>
+                </Card>
+              )}
               <Box className="prose max-w-none">{children}</Box>
             </Flex>
           </Container>
