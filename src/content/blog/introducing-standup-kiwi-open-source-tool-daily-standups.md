@@ -8,6 +8,7 @@ heroImage: "/introducing-standup-kiwi-open-source-tool-daily-standups-hero-image
 author: "H. Alex Kwon"
 authorTitle: "Product Engineer"
 authorLink: "https://x.com/hyokualexkwon"
+tags: ["Announcement"]
 ---
 
 Hey there! I'm Alex, a developer who has spent the last few months building an open source standup tool called **Standup Kiwi**.

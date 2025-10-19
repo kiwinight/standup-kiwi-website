@@ -6,7 +6,11 @@ pubDate: "2025-09-17"
 author: "H. Alex Kwon"
 authorTitle: "Product Engineer"
 authorLink: "https://x.com/hyokualexkwon"
+tags: ["Engineering", "UX"]
+draft: true
 ---
+
+<!-- TODO: Proofread this post. Modify to match the style of the 'Building customizable standup forms' post -->
 
 Standup Kiwi allows users to write daily standups using markdown syntax. However, some users mentioned they sometimes can't break lines because they're not familiar with line break syntax. So I added a feature to allow users to break lines more intuitively.
 
