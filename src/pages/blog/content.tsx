@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Card,
   Container,
@@ -109,8 +110,6 @@ function Content({ posts }: Props) {
                           {post.data.title}
                         </Text>
 
-                        <Text size="3">{post.data.description}</Text>
-
                         <Text size="2" color="gray">
                           {post.data.pubDate.toLocaleDateString("en-US", {
                             month: "long",
@@ -118,6 +117,18 @@ function Content({ posts }: Props) {
                             year: "numeric",
                           })}
                         </Text>
+
+                        {post.data.tags && post.data.tags.length > 0 && (
+                          <Flex gap="2" wrap="wrap">
+                            {post.data.tags.map((tag) => (
+                              <Badge key={tag} variant="soft" color="gray">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </Flex>
+                        )}
+
+                        <Text size="3">{post.data.description}</Text>
                       </Flex>
                     </a>
                   </Card>

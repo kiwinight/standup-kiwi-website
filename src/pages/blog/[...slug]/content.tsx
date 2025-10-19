@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Container,
   Flex,
@@ -107,6 +108,16 @@ function Content({ post, children }: Props) {
                     </Text>
                   )}
                 </Text>
+
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <Flex gap="2" wrap="wrap">
+                    {post.data.tags.map((tag) => (
+                      <Badge key={tag} variant="soft" color="gray">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </Flex>
+                )}
               </Flex>
             </Flex>
           </Container>
@@ -142,8 +153,8 @@ function Content({ post, children }: Props) {
                     sm: "4",
                   }}
                   mt={{
-                    initial: '24px',
-                    sm: '32px',
+                    initial: "24px",
+                    sm: "32px",
                   }}
                 >
                   <Inset clip="padding-box" side="all">
