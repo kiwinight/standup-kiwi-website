@@ -9,8 +9,8 @@ import { PAGE_DESCRIPTION } from "./constants";
 
 const releases = (await getCollection("releases")).sort((a, b) => {
   // Sort by version number (descending)
-  const aVersion = a.id.replace("v", "").split(".").map(Number);
-  const bVersion = b.id.replace("v", "").split(".").map(Number);
+  const aVersion = a.id.split(".").map(Number);
+  const bVersion = b.id.split(".").map(Number);
 
   for (let i = 0; i < Math.max(aVersion.length, bVersion.length); i++) {
     const aNum = aVersion[i] || 0;
@@ -21,6 +21,13 @@ const releases = (await getCollection("releases")).sort((a, b) => {
   }
   return 0;
 });
+
+// Debug logging for production
+console.log("[Releases Index] Total releases:", releases.length);
+console.log(
+  "[Releases Index] Release IDs:",
+  releases.map((r) => r.id)
+);
 ---
 
 <!doctype html>
@@ -33,4 +40,3 @@ const releases = (await getCollection("releases")).sort((a, b) => {
     <Content releases={releases} client:load />
   </body>
 </html>
-

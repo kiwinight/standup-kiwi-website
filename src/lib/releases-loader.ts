@@ -58,6 +58,9 @@ export function releasesLoader(): Loader {
       }
 
       try {
+        // Clear existing entries to avoid duplicates when IDs change
+        store.clear();
+
         // Fetch directory listing
         const releasesResponse = await fetch(
           "https://api.github.com/repos/kiwinight/standup-kiwi/contents/docs/releases",
@@ -120,8 +123,11 @@ export function releasesLoader(): Loader {
                 "base64"
               ).toString("utf-8");
 
-              // Parse version from filename (e.g., "v0.9.0.md" -> "v0.9.0")
-              const version = releaseFile.name.replace(".md", "");
+              // Parse version from filename (e.g., "v0.9.0.md" -> "0.9.0")
+              // Strip "v" prefix for cleaner URLs
+              const version = releaseFile.name
+                .replace(".md", "")
+                .replace(/^v/, "");
 
               // Extract title and description from markdown
               const lines = markdown.split("\n");

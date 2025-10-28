@@ -9,6 +9,10 @@ import Content from "./content";
 
 export async function getStaticPaths() {
   const releases = await getCollection("releases");
+  console.log(
+    "[Release Detail] Generating paths for:",
+    releases.map((r) => r.id)
+  );
   return releases.map((release) => ({
     params: { slug: release.id },
     props: release,
@@ -17,6 +21,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"releases">;
 
 const release = Astro.props;
+console.log("[Release Detail] Rendering release:", release.id);
 const { Content: ReleaseContent } = await render(release);
 ---
 
