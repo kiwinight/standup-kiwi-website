@@ -26,6 +26,19 @@ interface GitHubFileContent extends GitHubContent {
   encoding: "base64";
 }
 
+// Response from GitHub Commits API
+interface GitHubCommit {
+  sha: string;
+  commit: {
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    message: string;
+  };
+}
+
 export function releasesLoader(): Loader {
   return {
     name: "releases-loader",
@@ -83,6 +96,24 @@ export function releasesLoader(): Loader {
               const releaseFileData: GitHubFileContent =
                 await releaseFileResponse.json();
 
+              // Fetch commit date for this file
+              const commitsResponse = await fetch(
+                `https://api.github.com/repos/kiwinight/standup-kiwi/commits?path=${releaseFileData.path}&per_page=1`,
+                { headers }
+              );
+
+              let releaseDate = new Date();
+              if (commitsResponse.ok) {
+                const commits: GitHubCommit[] = await commitsResponse.json();
+                if (commits.length > 0) {
+                  releaseDate = new Date(commits[0].commit.author.date);
+                }
+              } else {
+                logger.warn(
+                  `Failed to fetch commit date for ${releaseFile.name}, using current date`
+                );
+              }
+
               // Decode base64 content
               const markdown = Buffer.from(
                 releaseFileData.content,
@@ -136,7 +167,7 @@ export function releasesLoader(): Loader {
                 data: {
                   title,
                   description: description || `Release notes for ${version}`,
-                  pubDate: new Date(),
+                  pubDate: releaseDate,
                   author: "Standup Kiwi Team",
                   githubUrl: releaseFileData.html_url,
                 },
