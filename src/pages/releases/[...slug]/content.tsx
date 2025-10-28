@@ -1,16 +1,13 @@
 import {
-  Badge,
   Box,
+  Button,
   Container,
   Flex,
-  Text,
   Heading,
-  Section,
-  Theme,
-  Card,
-  Inset,
-  Button,
   Link,
+  Section,
+  Text,
+  Theme,
 } from "@radix-ui/themes";
 import { NavBar } from "../../../components/nav-bar";
 import { Footer } from "../../../components/footer";
@@ -20,18 +17,19 @@ import type { ReactNode } from "react";
 import { ArrowLeftIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
 
 type Props = {
-  post: {
+  release: {
     id: string;
     body?: string;
-    collection: "blog";
-    data: InferEntrySchema<"blog">;
+    collection: "releases";
+    data: InferEntrySchema<"releases">;
     rendered?: RenderedContent;
-    filePath?: string;
   };
   children: ReactNode;
 };
 
-function Content({ post, children }: Props) {
+function Content({ release, children }: Props) {
+  const changelogUrl = `https://github.com/kiwinight/standup-kiwi/releases/tag/${release.id}`;
+
   return (
     <Theme className="relative" accentColor="gray">
       <NavBar />
@@ -42,8 +40,6 @@ function Content({ post, children }: Props) {
             sm: "4",
           }}
           pb={{
-            // initial: "48px",
-            // sm: "56px",
             initial: "24px",
             sm: "24px",
           }}
@@ -61,9 +57,9 @@ function Content({ post, children }: Props) {
               <Flex direction="column" gap="4">
                 <Flex>
                   <Button asChild variant="ghost" highContrast>
-                    <a href={`/blog`}>
+                    <a href={`/releases`}>
                       <ArrowLeftIcon />
-                      Back to blog
+                      Back to releases
                     </a>
                   </Button>
                 </Flex>
@@ -73,52 +69,24 @@ function Content({ post, children }: Props) {
                     initial: "8",
                   }}
                 >
-                  {post.data.title}
+                  {release.data.title}
                 </Heading>
 
                 <Text size="3" color="gray">
-                  Posted on{" "}
-                  {post.data.pubDate.toLocaleDateString("en-US", {
+                  Released on{" "}
+                  {release.data.pubDate.toLocaleDateString("en-US", {
                     month: "long",
                     day: "numeric",
                     year: "numeric",
-                  })}{" "}
-                  {post.data.updatedDate && (
-                    <>
-                      • Edited on{" "}
-                      {post.data.updatedDate?.toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </>
-                  )}{" "}
+                  })}
                 </Text>
 
-                <Text size="3" color="gray">
-                  {post.data.authorLink ? (
-                    <Link href={post.data.authorLink} target="_blank">
-                      {post.data.author}
-                    </Link>
-                  ) : (
-                    post.data.author
-                  )}
-                  {post.data.authorTitle && (
-                    <Text size="3" color="gray">
-                      {", " + post.data.authorTitle}
-                    </Text>
-                  )}
-                </Text>
-
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <Flex gap="2" wrap="wrap">
-                    {post.data.tags.map((tag) => (
-                      <Badge key={tag} variant="soft" color="gray">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </Flex>
-                )}
+                <Flex asChild align="center" gap="1">
+                  <Link href={release.data.githubUrl} target="_blank">
+                    See original
+                    <ExternalLinkIcon />
+                  </Link>
+                </Flex>
               </Flex>
             </Flex>
           </Container>
@@ -147,26 +115,6 @@ function Content({ post, children }: Props) {
                 sm: "6",
               }}
             >
-              {post.data.heroImage && (
-                <Card
-                  size={{
-                    initial: "2",
-                    sm: "4",
-                  }}
-                  mt={{
-                    initial: "24px",
-                    sm: "32px",
-                  }}
-                >
-                  <Inset clip="padding-box" side="all">
-                    <img
-                      src={post.data.heroImage}
-                      className="object-cover w-full aspect-2/1"
-                      alt={post.data.title}
-                    />
-                  </Inset>
-                </Card>
-              )}
               <Box className="prose max-w-none">{children}</Box>
             </Flex>
           </Container>

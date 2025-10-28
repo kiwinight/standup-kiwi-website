@@ -1,0 +1,36 @@
+---
+import "@radix-ui/themes/styles.css";
+import "../../styles/global.css";
+import BaseHead from "../../components/base-head.astro";
+import { getCollection } from "astro:content";
+import ContentHead from "../../components/content-head.astro";
+import Content from "./content";
+import { PAGE_DESCRIPTION } from "./constants";
+
+const releases = (await getCollection("releases")).sort((a, b) => {
+  // Sort by version number (descending)
+  const aVersion = a.id.replace("v", "").split(".").map(Number);
+  const bVersion = b.id.replace("v", "").split(".").map(Number);
+
+  for (let i = 0; i < Math.max(aVersion.length, bVersion.length); i++) {
+    const aNum = aVersion[i] || 0;
+    const bNum = bVersion[i] || 0;
+    if (aNum !== bNum) {
+      return bNum - aNum;
+    }
+  }
+  return 0;
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead />
+    <ContentHead title="Releases" description={PAGE_DESCRIPTION} />
+  </head>
+  <body>
+    <Content releases={releases} client:load />
+  </body>
+</html>
+

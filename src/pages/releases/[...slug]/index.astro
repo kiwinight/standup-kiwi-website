@@ -1,0 +1,37 @@
+---
+import "@radix-ui/themes/styles.css";
+import "../../../styles/global.css";
+import { type CollectionEntry, getCollection } from "astro:content";
+import { render } from "astro:content";
+import BaseHead from "../../../components/base-head.astro";
+import ContentHead from "../../../components/content-head.astro";
+import Content from "./content";
+
+export async function getStaticPaths() {
+  const releases = await getCollection("releases");
+  return releases.map((release) => ({
+    params: { slug: release.id },
+    props: release,
+  }));
+}
+type Props = CollectionEntry<"releases">;
+
+const release = Astro.props;
+const { Content: ReleaseContent } = await render(release);
+---
+
+<html lang="en">
+  <head>
+    <BaseHead />
+    <ContentHead
+      title={release.data.title}
+      description={release.data.description}
+    />
+  </head>
+
+  <body>
+    <Content release={release} client:load>
+      <ReleaseContent />
+    </Content>
+  </body>
+</html>

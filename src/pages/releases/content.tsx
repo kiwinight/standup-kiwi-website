@@ -1,11 +1,9 @@
 import {
-  Badge,
   Box,
   Card,
   Container,
   Flex,
   Heading,
-  Inset,
   Section,
   Text,
   Theme,
@@ -16,17 +14,16 @@ import type { InferEntrySchema, RenderedContent } from "astro:content";
 import { PAGE_DESCRIPTION } from "./constants";
 
 type Props = {
-  posts: {
+  releases: {
     id: string;
     body?: string;
-    collection: "blog";
-    data: InferEntrySchema<"blog">;
+    collection: "releases";
+    data: InferEntrySchema<"releases">;
     rendered?: RenderedContent;
-    filePath?: string;
   }[];
 };
 
-function Content({ posts }: Props) {
+function Content({ releases }: Props) {
   return (
     <Theme className="relative" accentColor="gray">
       <NavBar />
@@ -60,7 +57,7 @@ function Content({ posts }: Props) {
                     initial: "8",
                   }}
                 >
-                  Blog
+                  Releases
                 </Heading>
                 <Text size="4" color="gray">
                   {PAGE_DESCRIPTION}
@@ -86,50 +83,31 @@ function Content({ posts }: Props) {
             }}
           >
             <Flex direction="column" gap="6">
-              {posts.map((post) => {
+              {releases.map((release) => {
                 return (
                   <Card
                     asChild
-                    key={post.id}
+                    key={release.id}
                     size={{
                       initial: "2",
                       sm: "4",
                     }}
                   >
-                    <a href={`/blog/${post.id}`}>
-                      <Inset clip="padding-box" side="top" pb="current">
-                        {post.data.heroImage && (
-                          <img
-                            src={post.data.heroImage}
-                            className="object-cover w-full aspect-2/1"
-                            alt={post.data.title}
-                          />
-                        )}
-                      </Inset>
+                    <a href={`/releases/${release.id}`}>
                       <Flex direction="column" gap="2">
                         <Text size="6" weight="bold">
-                          {post.data.title}
+                          {release.data.title}
                         </Text>
 
                         <Text size="2" color="gray">
-                          {post.data.pubDate.toLocaleDateString("en-US", {
+                          {release.data.pubDate.toLocaleDateString("en-US", {
                             month: "long",
                             day: "numeric",
                             year: "numeric",
                           })}
                         </Text>
 
-                        {post.data.tags && post.data.tags.length > 0 && (
-                          <Flex gap="2" wrap="wrap">
-                            {post.data.tags.map((tag) => (
-                              <Badge key={tag} variant="soft" color="gray">
-                                {tag}
-                              </Badge>
-                            ))}
-                          </Flex>
-                        )}
-
-                        <Text size="3">{post.data.description}</Text>
+                        <Text size="3">{release.data.description}</Text>
                       </Flex>
                     </a>
                   </Card>
