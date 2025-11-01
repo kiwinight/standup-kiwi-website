@@ -123,11 +123,8 @@ export function releasesLoader(): Loader {
                 "base64"
               ).toString("utf-8");
 
-              // Parse version from filename (e.g., "v0.9.0.md" -> "0.9.0")
-              // Strip "v" prefix for cleaner URLs
-              const version = releaseFile.name
-                .replace(".md", "")
-                .replace(/^v/, "");
+              // Parse version from filename (e.g., "v0.9.0.md" -> "v0.9.0")
+              const version = releaseFile.name.replace(".md", "");
 
               // Extract title and description from markdown
               const lines = markdown.split("\n");

@@ -21,13 +21,6 @@ const releases = (await getCollection("releases")).sort((a, b) => {
   }
   return 0;
 });
-
-// Debug logging for production
-console.log("[Releases Index] Total releases:", releases.length);
-console.log(
-  "[Releases Index] Release IDs:",
-  releases.map((r) => r.id)
-);
 ---
 
 <!doctype html>
