@@ -3,27 +3,20 @@ import "@radix-ui/themes/styles.css";
 import "../../../styles/global.css";
 import BaseHead from "../../../components/base-head.astro";
 import ContentHead from "../../../components/content-head.astro";
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  Link,
-  Section,
-  Text,
-  Theme,
-} from "@radix-ui/themes";
-import { NavBar } from "../../../components/nav-bar";
-import { Footer } from "../../../components/footer";
-import { ArrowLeftIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import Content from "../[...slug]/content";
 
-const title = "v0.9.0";
-const description =
-  "This release introduces customizable standup forms with a visual form builder, letting you tailor your board's questions to match your team's specific workflow. We've also added admin role protection to board settings and fixed line breaks in standup responses.";
-const pubDate = new Date("2025-10-26");
-const githubUrl =
-  "https://github.com/kiwinight/standup-kiwi/releases/tag/v0.9.0";
+const release = {
+  id: "0.9.0",
+  collection: "releases" as const,
+  data: {
+    title: "v0.9.0",
+    description:
+      "This release introduces customizable standup forms with a visual form builder, letting you tailor your board's questions to match your team's specific workflow. We've also added admin role protection to board settings and fixed line breaks in standup responses.",
+    pubDate: new Date("2025-10-26"),
+    author: "Standup Kiwi Team",
+    githubUrl: "https://github.com/kiwinight/standup-kiwi/releases/tag/v0.9.0",
+  },
+};
 
 console.log(
   "[Hardcoded Release 0.9.0] Page rendered successfully at /releases/0.9.0"
@@ -33,151 +26,59 @@ console.log(
 <html lang="en">
   <head>
     <BaseHead />
-    <ContentHead title={title} description={description} />
+    <ContentHead
+      title={release.data.title}
+      description={release.data.description}
+    />
   </head>
 
   <body>
-    <Theme className="relative" accentColor="gray" client:load>
-      <NavBar client:load />
-      <Box>
-        <Section
-          size={{
-            initial: "3",
-            sm: "4",
-          }}
-          pb={{
-            initial: "24px",
-            sm: "24px",
-          }}
-          className="relative"
+    <Content release={release} client:load>
+      <h2>Features</h2>
+      <ul>
+        <li>
+          <strong>Customizable Standup Forms</strong><br />
+          Build your own standup form with a visual form builder in board settings.
+          Add, edit, remove, duplicate, and reorder fields to match your team's needs.
+          Each field supports custom labels, placeholders, help text descriptions,
+          and can be marked as required or optional. Reorder fields with drag-and-drop
+          on desktop or arrow buttons on mobile. Changes apply immediately for all
+          board members.
+        </li>
+      </ul>
+
+      <h2>Improvements</h2>
+      <ul>
+        <li>
+          <strong>Admin Role Protection for Settings</strong><br />
+          Board settings including name, timezone, standup forms, and invitation
+          management now require admin privileges to modify. This prevents accidental
+          changes while keeping settings visible to all collaborators. Non-admin
+          users see a clear info message and disabled controls.
+        </li>
+        <li>
+          <strong>Form Builder Dependencies</strong><br />
+          Added motion/react (framer-motion) for smooth drag-and-drop interactions
+          in the form builder.
+        </li>
+      </ul>
+
+      <h2>Bugfixes</h2>
+      <ul>
+        <li>
+          <strong>Line Break Rendering</strong><br />
+          Fixed markdown rendering to treat single line breaks as hard breaks. This
+          improves the experience for users unfamiliar with markdown's double-space-newline
+          syntax, making text formatting more intuitive and natural.
+        </li>
+      </ul>
+
+      <p>
+        <strong>Full Changelog</strong>: <a
+          href="https://github.com/kiwinight/standup-kiwi/compare/v0.8.1...v0.9.0"
+          target="_blank">v0.8.1...v0.9.0</a
         >
-          <Container
-            size={{
-              sm: "2",
-            }}
-            px={{
-              initial: "4",
-            }}
-          >
-            <Flex direction="column" gap="6">
-              <Flex direction="column" gap="4">
-                <Flex>
-                  <Button asChild variant="ghost" highContrast>
-                    <a href="/releases">
-                      <ArrowLeftIcon />
-                      Back to releases
-                    </a>
-                  </Button>
-                </Flex>
-                <Heading
-                  as="h1"
-                  size={{
-                    initial: "8",
-                  }}
-                >
-                  {title}
-                </Heading>
-
-                <Text size="3" color="gray">
-                  Released on {
-                    pubDate.toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })
-                  }
-                </Text>
-
-                <Flex asChild align="center" gap="1">
-                  <Link href={githubUrl} target="_blank">
-                    See original
-                    <ExternalLinkIcon />
-                  </Link>
-                </Flex>
-              </Flex>
-            </Flex>
-          </Container>
-        </Section>
-
-        <Section
-          size={{
-            initial: "3",
-            sm: "4",
-          }}
-          pt="0"
-          className="relative"
-        >
-          <Container
-            size={{
-              sm: "2",
-            }}
-            px={{
-              initial: "4",
-            }}
-          >
-            <Flex
-              direction="column"
-              gap={{
-                initial: "5",
-                sm: "6",
-              }}
-            >
-              <Box className="prose max-w-none">
-                <h2>Features</h2>
-                <ul>
-                  <li>
-                    <strong>Customizable Standup Forms</strong><br />
-                    Build your own standup form with a visual form builder in board
-                    settings. Add, edit, remove, duplicate, and reorder fields to
-                    match your team's needs. Each field supports custom labels,
-                    placeholders, help text descriptions, and can be marked as
-                    required or optional. Reorder fields with drag-and-drop on
-                    desktop or arrow buttons on mobile. Changes apply immediately for
-                    all board members.
-                  </li>
-                </ul>
-
-                <h2>Improvements</h2>
-                <ul>
-                  <li>
-                    <strong>Admin Role Protection for Settings</strong><br />
-                    Board settings including name, timezone, standup forms, and
-                    invitation management now require admin privileges to modify.
-                    This prevents accidental changes while keeping settings visible
-                    to all collaborators. Non-admin users see a clear info message
-                    and disabled controls.
-                  </li>
-                  <li>
-                    <strong>Form Builder Dependencies</strong><br />
-                    Added motion/react (framer-motion) for smooth drag-and-drop
-                    interactions in the form builder.
-                  </li>
-                </ul>
-
-                <h2>Bugfixes</h2>
-                <ul>
-                  <li>
-                    <strong>Line Break Rendering</strong><br />
-                    Fixed markdown rendering to treat single line breaks as hard
-                    breaks. This improves the experience for users unfamiliar with
-                    markdown's double-space-newline syntax, making text formatting
-                    more intuitive and natural.
-                  </li>
-                </ul>
-
-                <p>
-                  <strong>Full Changelog</strong>: <a
-                    href="https://github.com/kiwinight/standup-kiwi/compare/v0.8.1...v0.9.0"
-                    target="_blank">https://github.com/kiwinight/standup-kiwi/compare/v0.8.1...v0.9.0</a
-                  >
-                </p>
-              </Box>
-            </Flex>
-          </Container>
-        </Section>
-      </Box>
-      <Footer client:load />
-    </Theme>
+      </p>
+    </Content>
   </body>
 </html>
-
