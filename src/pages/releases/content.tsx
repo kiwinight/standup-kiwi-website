@@ -93,7 +93,7 @@ function Content({ releases }: Props) {
                       sm: "4",
                     }}
                   >
-                    <a href={`/releases/${release.id}`}>
+                    <a href={`/releases/${release.id}/`}>
                       <Flex direction="column" gap="2">
                         <Text size="6" weight="bold">
                           {release.data.title}
